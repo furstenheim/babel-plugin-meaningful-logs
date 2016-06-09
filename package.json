@@ -1,0 +1,20 @@
+{
+  "name": "babel-plugin-meaningful-logs",
+  "version": "1.0.0",
+  "description": "Give meaning to your logs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "logs",
+    "debug",
+    "babel"
+  ],
+  "author": "Gabriel Fürstenheim <furstenheim@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "babylon": "^6.8.1"
+  }
+}
