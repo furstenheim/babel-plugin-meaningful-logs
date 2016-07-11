@@ -1,3 +1,6 @@
-var someModule = require('something')
-var someVariable = someModule(1)
-console.log(someVariable)
+function square(n) {
+    return n * n;
+}
+n;
+
+console.something.log(b)
