@@ -3,4 +3,5 @@ function square(n) {
 }
 n;
 
+"a";
 console.something.x(b);

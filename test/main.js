@@ -2,6 +2,7 @@
 var babylon = require('babylon')
 var traverse = require('babel-traverse').default
 var generate = require('babel-generator').default
+var t = require('babel-types')
 var fs = require('fs')
 var code = fs.readFileSync('./test/src/test1.js').toString()
 var parsedCode = babylon.parse(code)
@@ -12,6 +13,7 @@ const updateParamNameVisitor = {
     CallExpression(path) {
         console.log(path.node.callee.object, path.node.callee.property, path.node.callee.property.name)
         if (path.node.callee.property.name === 'log') {
+            path.insertBefore(t.expressionStatement(t.stringLiteral('a')))
             path.node.callee.property.name = "x";
         }
     }
