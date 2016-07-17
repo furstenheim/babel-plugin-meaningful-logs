@@ -10,17 +10,7 @@ var parsedCode = babylon.parse(code)
 //console.log(parsedCode)
 //console.log(traverse)
 
-const updateParamNameVisitor = {
-    CallExpression(path) {
-        if (path.node.callee.property.name === 'log') {
-            var description = []
-            for (let expression of path.node.arguments) {
-                description.push(code.substring(expression.start, expression.end))
-            }
-            path.node.arguments.unshift(t.stringLiteral(description.join(',')))
-        }
-    }
-}
+const updateParamNameVisitor = module
 /*
 const MyVisitor = {
     FunctionDeclaration(path) {

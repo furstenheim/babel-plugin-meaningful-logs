@@ -4,7 +4,8 @@
   "description": "Give meaning to your logs",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "test-babel": "npm run test-babel --prefix test"
   },
   "keywords": [
     "logs",
@@ -13,7 +14,10 @@
   ],
   "author": "Gabriel Fürstenheim <furstenheim@gmail.com>",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0"
+  },
   "dependencies": {
     "babel-generator": "^6.11.0",
     "babel-traverse": "^6.9.0",
