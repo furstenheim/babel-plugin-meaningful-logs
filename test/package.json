@@ -2,6 +2,6 @@
   "name": "application-name",
   "version": "0.0.1",
   "scripts": {
-    "test-babel": "babel main.js -d build"
+    "test-babel": "babel src -d build"
   }
 }

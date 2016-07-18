@@ -1,6 +1,4 @@
 {
-  "presets": [
-    "es2015"
-  ],
-  "plugins": []
+  "presets": ["es2015"],
+  "plugins": ["../dist/index.js"]
 }

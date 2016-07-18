@@ -1,17 +1,27 @@
 "use strict"
+import plugin from '../src/index'
+import {transformFileSync} from 'babel-core'/*
 var babylon = require('babylon')
 var traverse = require('babel-traverse').default
 var generate = require('babel-generator').default
 var t = require('babel-types')
 var fs = require('fs')
-var code = fs.readFileSync('./test/src/test1.js').toString()
-var module = require('../index')
+var code = fs.readFileSync('./test/src/test1.js').toString()*/
+describe('transform code', function () {
+    it('should work', function(){
+        var transform = transformFileSync('./test/src/test1.js', {
+            'plugins': [[plugin]]
+        }).code
+        console.log(transform)
+    })
+})
+/*
 var parsedCode = babylon.parse(code)
 //console.log(parsedCode)
 //console.log(traverse)
 
-const updateParamNameVisitor = module
-/*
+const updateParamNameVisitor = require('../index')
+/!*
 const MyVisitor = {
     FunctionDeclaration(path) {
         const param = path.node.params[0];
@@ -20,9 +30,10 @@ const MyVisitor = {
 
         path.traverse(updateParamNameVisitor, { paramName });
     }
-};*/
+};*!/
 var ast = traverse(parsedCode, updateParamNameVisitor)
 //console.log(traverse(parsedCode, MyVisitor))
 var generatedCode = generate(parsedCode, null, code)
 fs.writeFileSync('./test/build/test1.js', generatedCode.code)
+*/
 
