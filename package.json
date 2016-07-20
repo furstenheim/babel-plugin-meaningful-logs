@@ -4,9 +4,10 @@
   "description": "Give meaning to your logs",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "test-babel": "npm run build && npm run test-babel --prefix test",
-    "build": "babel index.js -d dist"
+    "test": "mocha  test/main.js --compilers js:babel-register",
+    "test-babel": " npm run test-babel --prefix test",
+    "build": "babel index.js -d dist",
+    "build-test": "npm run build && npm run test-babel"
   },
   "keywords": [
     "logs",
@@ -17,8 +18,11 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.10.1",
+    "babel-core": "^6.11.4",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.9.0"
+    "babel-preset-es2015": "^6.9.0",
+    "lodash": "^4.13.1",
+    "mocha": "2.2.5"
   },
   "dependencies": {
     "babel-generator": "^6.11.0",
