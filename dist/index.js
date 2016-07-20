@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function (_ref) {
-    var t = _ref.types;
-
+exports.default = function (b) {
+    var t = b.types;
     //var t = b.types
     //console.log(b.File())
     return {
         visitor: {
             CallExpression: function CallExpression(path) {
+                var c = b;
                 console.log(path.node.callee.property.name);
                 if (path.node.callee.property.name === 'log') {
                     var description = [];
@@ -21,9 +21,9 @@ exports.default = function (_ref) {
 
                     try {
                         for (var _iterator = path.node.arguments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                            //description.push(code.substring(expression.start, expression.end))
-                            debugger
                             var expression = _step.value;
+
+                            description.push(this.file.code.substring(expression.start, expression.end));
                         }
                     } catch (err) {
                         _didIteratorError = true;

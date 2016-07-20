@@ -13,8 +13,8 @@ describe('transform code', function () {
     it('should work', function(done) {
         done()
         var transform = transformFileSync(path.join(__dirname, 'src/test1.js'), {
-            presets : ['es2015'],
-            'plugins': [plugin]
+            //'plugins': [plugin],
+            presets : ['es2015']
         }).code
         console.log(transform)
     })
