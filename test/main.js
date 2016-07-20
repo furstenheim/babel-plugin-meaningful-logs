@@ -2,21 +2,19 @@
 var plugin = require('../dist/index').default
 var transformFileSync = require('babel-core').transformFileSync
 var path = require('path')
-/*
-var babylon = require('babylon')
-var traverse = require('babel-traverse').default
-var generate = require('babel-generator').default
-var t = require('babel-types')
 var fs = require('fs')
-var code = fs.readFileSync('./test/src/test1.js').toString()*/
+var assert = require('assert')
 describe('transform code', function () {
     it('should work', function(done) {
-        done()
         var transform = transformFileSync(path.join(__dirname, 'src/test1.js'), {
             //'plugins': [plugin],
             presets : ['es2015']
         }).code
+        var expected = fs.readFileSync(path.join(__dirname, 'expected/test1.js')).toString()
+        console.log(expected)
         console.log(transform)
+        assert.equal(transform, expected)
+        done()
     })
 })
 /*

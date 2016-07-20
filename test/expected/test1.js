@@ -1,3 +1,8 @@
-var someModule = require('something')
-var someVariable = someModule(1)
-console.log('someVariable', someVariable)
+"use strict";
+
+function square(n) {
+    return n * n;
+}
+n;
+
+console.something.something2.log("b * b", b * b);
