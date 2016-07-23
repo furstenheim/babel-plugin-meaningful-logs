@@ -7,12 +7,17 @@ var diff = require('diff')
 
 var plugin = require('../dist/index').default
 
-var tests = [{file: 'test1'}, {file: 'map'}, {file: 'nonDefaultLogger'}, {file: 'nonDefaultLogger2'}]/*.slice(3,4)*/
+var tests = [{file: 'test1'},
+    {file: 'map'},
+    {file: 'nonDefaultLogger'},
+    {file: 'nonDefaultLogger2'},
+    {file: 'test1', options: {loggers : [{logger: 'console'}]}}
+].slice(4,5)
 describe('transform code', function () {
     tests.forEach(function(test){
         it(`No preset ${test.file}`, function(done) {
             var transform = transformFileSync(path.join(__dirname, `src/${test.file}.js`), {
-                plugins: [plugin],
+                plugins: [[plugin, test.options]]
                 //presets : ['es2015']
             }).code
             var expected = fs.readFileSync(path.join(__dirname, `expected/${test.file}.js`)).toString()
