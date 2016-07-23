@@ -3,7 +3,6 @@ var transformFileSync = require('babel-core').transformFileSync
 var path = require('path')
 var fs = require('fs')
 var assert = require('assert')
-var diff = require('diff')
 
 var plugin = require('../dist/index').default
 
@@ -18,11 +17,11 @@ describe('transform code', function () {
     tests.forEach(function(test){
         it(`No preset ${test.file}`, function(done) {
             var transform = transformFileSync(path.join(__dirname, `src/${test.file}.js`), {
-                plugins: [[plugin, test.options]]
+                plugins: [[plugin, test.options]],
+                babelrc: false // So we don't get babelrc from whole project
                 //presets : ['es2015']
             }).code
             var expected = fs.readFileSync(path.join(__dirname, `expected/${test.file}.js`)).toString()
-            console.log(diff.diffChars(transform, expected))
             assert.equal(transform, expected)
             done()
         })
