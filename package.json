@@ -2,10 +2,9 @@
   "name": "babel-plugin-meaningful-logs",
   "version": "1.0.0",
   "description": "Give meaning to your logs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha  test/main.js",
-    "test-babel": " npm run test-babel --prefix test",
     "build": "babel index.js -d dist",
     "build-test": "npm run build && npm test"
   },

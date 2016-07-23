@@ -3,7 +3,7 @@ export default function ({types: t}) {
     return {
         visitor  : {
             CallExpression(path, options) {
-                var loggers = options.opts.loggers || [{logger: 'console'}]
+                var loggers = options.opts.loggers || [{pattern: 'console'}]
                 if (isLogger(path, loggers)) {
                     var description = []
                     for (let expression of path.node.arguments) {
@@ -27,6 +27,6 @@ export default function ({types: t}) {
 
 function isLogger(path, loggers) {
     return _.some(loggers, function(logger) {
-        return path.get("callee").matchesPattern(logger.logger, true)
+        return path.get("callee").matchesPattern(logger.pattern, true)
     })
 }

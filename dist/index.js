@@ -10,7 +10,7 @@ exports.default = function (_ref) {
     return {
         visitor: {
             CallExpression: function CallExpression(path, options) {
-                var loggers = options.opts.loggers || [{ logger: 'console' }];
+                var loggers = options.opts.loggers || [{ pattern: 'console' }];
                 if (isLogger(path, loggers)) {
                     var description = [];
                     var _iteratorNormalCompletion = true;
@@ -57,6 +57,6 @@ var _ = require('lodash');
 
 function isLogger(path, loggers) {
     return _.some(loggers, function (logger) {
-        return path.get("callee").matchesPattern(logger.logger, true);
+        return path.get("callee").matchesPattern(logger.pattern, true);
     });
 }
