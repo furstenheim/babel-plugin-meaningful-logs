@@ -11,8 +11,9 @@ var tests = [{file: 'test1'},
     {file: 'map'},
     {file: 'nonDefaultLogger'},
     {file: 'nonDefaultLogger2'},
-    {file: 'test1', options: {loggers : [{logger: 'console'}]}}
-].slice(4,5)
+    {file: 'test1', options: {loggers : [{logger: 'console'}]}},
+    {file: 'readLoggerFromOptions', options: {loggers: [{logger: 'winston'}]}}
+]
 describe('transform code', function () {
     tests.forEach(function(test){
         it(`No preset ${test.file}`, function(done) {

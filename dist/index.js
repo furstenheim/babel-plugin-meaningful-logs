@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -9,8 +9,9 @@ exports.default = function (_ref) {
 
     return {
         visitor: {
-            CallExpression: function CallExpression(path) {
-                if (path.get("callee").matchesPattern("console", true)) {
+            CallExpression: function CallExpression(path, options) {
+                var loggers = options.opts.loggers || [{ logger: 'console' }];
+                if (isLogger(path, loggers)) {
                     var description = [];
                     var _iteratorNormalCompletion = true;
                     var _didIteratorError = false;
@@ -24,7 +25,7 @@ exports.default = function (_ref) {
                                 var filePath = this.file.log.filename.slice(process.cwd().length);
                                 var line = expression.loc.start.line;
                                 var column = expression.loc.start.column;
-                                description.push(filePath + ":" + line + ":" + column + ":" + this.file.code.substring(expression.start, expression.end));
+                                description.push(filePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));
                             } else {
                                 description.push(this.file.code.substring(expression.start, expression.end));
                             }
@@ -50,3 +51,12 @@ exports.default = function (_ref) {
         }
     };
 };
+
+var _ = require('lodash');
+
+
+function isLogger(path, loggers) {
+    return _.some(loggers, function (logger) {
+        return path.get("callee").matchesPattern(logger.logger, true);
+    });
+}
