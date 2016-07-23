@@ -1,7 +1,0 @@
-{
-  "name": "application-name",
-  "version": "0.0.1",
-  "scripts": {
-    "test-babel": "babel src -d build"
-  }
-}
