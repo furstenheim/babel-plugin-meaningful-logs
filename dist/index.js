@@ -20,7 +20,14 @@ exports.default = function (_ref) {
                         for (var _iterator = path.node.arguments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                             var expression = _step.value;
 
-                            description.push(this.file.code.substring(expression.start, expression.end));
+                            if (description.length === 0) {
+                                var filePath = this.file.log.filename.slice(process.cwd().length);
+                                var line = expression.loc.start.line;
+                                var column = expression.loc.start.column;
+                                description.push(filePath + ":" + line + ":" + column + ":" + this.file.code.substring(expression.start, expression.end));
+                            } else {
+                                description.push(this.file.code.substring(expression.start, expression.end));
+                            }
                         }
                     } catch (err) {
                         _didIteratorError = true;

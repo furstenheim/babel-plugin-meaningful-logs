@@ -5,4 +5,4 @@ function square(n) {
 }
 n;
 
-console.log("b * b", b * b);
+console.log("/test/src/test1.js:6:12:b * b", b * b);

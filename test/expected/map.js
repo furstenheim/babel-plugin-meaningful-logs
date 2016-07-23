@@ -5,4 +5,4 @@ function square(n) {
 }
 var b = [1, 2, 3, 4];
 
-console.log("b.map(square)", b.map(square));
+console.log("/test/src/map.js:8:12:b.map(square)", b.map(square));
