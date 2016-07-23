@@ -21,17 +21,5 @@ describe('transform code', function () {
             done()
         })
     })
-    tests.forEach(function(test){
-        it(`One preset ${test.file}`, function(done) {
-            var transform = transformFileSync(path.join(__dirname, `src/${test.file}.js`), {
-                plugins: [plugin],
-                presets : ['es2015']
-            }).code
-            var expected = fs.readFileSync(path.join(__dirname, `expected/${test.file}.js`)).toString()
-            console.log(diff.diffChars(transform, expected))
-            assert.equal(transform, expected)
-            done()
-        })
-    })
 })
 

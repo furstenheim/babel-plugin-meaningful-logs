@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha  test/main.js",
     "test-babel": " npm run test-babel --prefix test",
-    "build": "babel index.js -d dist",
+    "build": "node build.js",
     "build-test": "npm run build && npm test"
   },
   "keywords": [
