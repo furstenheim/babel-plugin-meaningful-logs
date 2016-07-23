@@ -3,4 +3,4 @@ function square(n) {
 }
 n;
 
-console.something.something2.log(b * b);
+console.log(b * b);

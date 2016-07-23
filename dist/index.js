@@ -1,19 +1,16 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function (b) {
-    var t = b.types;
-    //var t = b.types
-    //console.log(b.File())
+exports.default = function (_ref) {
+    var t = _ref.types;
+
     return {
         visitor: {
             CallExpression: function CallExpression(path) {
-                var c = b;
-                console.log(path.node.callee.property.name);
-                if (path.node.callee.property.name === 'log') {
+                if (path.get("callee").matchesPattern("console", true)) {
                     var description = [];
                     var _iteratorNormalCompletion = true;
                     var _didIteratorError = false;
