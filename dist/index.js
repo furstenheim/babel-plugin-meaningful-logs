@@ -22,7 +22,7 @@ exports.default = function (_ref) {
                             var expression = _step.value;
 
                             if (description.length === 0) {
-                                var filePath = this.file.log.filename.slice(process.cwd().length);
+                                var filePath = this.file.log.filename;
                                 var line = expression.loc.start.line;
                                 var column = expression.loc.start.column;
                                 description.push(filePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));

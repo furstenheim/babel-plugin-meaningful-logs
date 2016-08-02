@@ -8,7 +8,7 @@ export default function ({types: t}) {
                     var description = []
                     for (let expression of path.node.arguments) {
                         if (description.length === 0) {
-                            let filePath = this.file.log.filename.slice(process.cwd().length)
+                            let filePath = this.file.log.filename
                             let line = expression.loc.start.line
                             let column = expression.loc.start.column
                             description.push(`${filePath}:${line}:${column}:${this.file.code.substring(expression.start, expression.end)}`)

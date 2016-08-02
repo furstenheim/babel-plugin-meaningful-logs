@@ -16,7 +16,7 @@ var tests = [{file: 'test1'},
 describe('transform code', function () {
     tests.forEach(function(test){
         it(`No preset ${test.file}`, function(done) {
-            var transform = transformFileSync(path.join(__dirname, `src/${test.file}.js`), {
+            var transform = transformFileSync(`test/src/${test.file}.js`, {
                 plugins: [[plugin, test.options]],
                 babelrc: false // So we don't get babelrc from whole project
             }).code

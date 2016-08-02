@@ -22,7 +22,7 @@ By default it modifies all console commands: console.error, console.log... But i
 {
   plugins: [
     ['meaningful-logs',
-    {loggers: [{pattern: 'winston'}]
+    {loggers: [{pattern: 'winston'}]}
     ]
   ]
 }
