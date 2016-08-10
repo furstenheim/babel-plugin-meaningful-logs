@@ -25,5 +25,17 @@ describe('transform code', function () {
             done()
         })
     })
+    tests.forEach(function(test){
+        it(`Absolute path ${test.file}`, function(done) {
+            var transform = transformFileSync(path.join(__dirname, `src/${test.file}.js`), {
+                plugins: [[plugin, test.options]],
+                babelrc: false // So we don't get babelrc from whole project
+            }).code
+            var expected = fs.readFileSync(path.join(__dirname, `expected/${test.file}.js`)).toString()
+            assert.equal(transform, expected)
+            done()
+        })
+    })
+
 })
 

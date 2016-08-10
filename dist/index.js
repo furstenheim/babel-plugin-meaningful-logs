@@ -22,10 +22,18 @@ exports.default = function (_ref) {
                             var expression = _step.value;
 
                             if (description.length === 0) {
+                                var relativePath = void 0;
                                 var filePath = this.file.log.filename;
+                                if (filePath.charAt(0) !== '/') {
+                                    relativePath = filePath;
+                                } else {
+                                    var cwd = process.cwd();
+                                    relativePath = filePath.substring(cwd.length + 1);
+                                }
+
                                 var line = expression.loc.start.line;
                                 var column = expression.loc.start.column;
-                                description.push(filePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));
+                                description.push(relativePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));
                             } else {
                                 description.push(this.file.code.substring(expression.start, expression.end));
                             }

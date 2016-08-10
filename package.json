@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-meaningful-logs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Give meaning to your logs",
   "main": "dist/index.js",
   "repository": {
