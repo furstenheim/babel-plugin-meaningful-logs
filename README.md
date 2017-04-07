@@ -3,7 +3,7 @@ Babel Plugin Meaningful Logs
 
 A babel plugin that enhances your logs by adding the file and the object logging.
 
-###Example
+### Example
 ```javascript
 "use strict"
 console.log(b.length)
