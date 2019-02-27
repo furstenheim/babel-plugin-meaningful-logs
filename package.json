@@ -8,7 +8,8 @@
     "url": "git://github.com/furstenheim/babel-plugin-meaningful-logs.git"
   },
   "scripts": {
-    "test": "mocha  test/main.js",
+    "test": "NODE_ENV='test' mocha  test/main.js",
+    "test-watch": "NODE_ENV='test'npm run build && mocha --watch test/main.js",
     "build": "babel index.js -d dist",
     "build-test": "npm run build && npm test"
   },
