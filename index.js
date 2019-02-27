@@ -1,31 +1,45 @@
-var _ = require('lodash')
+const _ = require("lodash")
+const exec = require("child_process").exec
+let commitHash = "";
+
+exec("git rev-parse --short HEAD", function processExecution(error, result) {
+    if (error) {
+        console.info(error);
+        process.exit(0);
+    }
+
+    commitHash = process.env.NODE_ENV === "test" ? "000" : result;
+});
+
 export default function ({types: t}) {
     return {
         visitor  : {
             CallExpression(path, options) {
-                var loggers = options.opts.loggers || [{pattern: 'console'}]
+                const loggers = options.opts.loggers || [{pattern: "console"}]
                 if (isLogger(path, loggers)) {
-                    var description = []
-                    for (let expression of path.node.arguments) {
+                    const description = []
+                    for (const expression of path.node.arguments) {
                         if (description.length === 0) {
                             let relativePath
-                            let filePath = this.file.log.filename
-                            if (filePath.charAt(0) !== '/') {
+                            const filePath = this.file.log.filename
+                            if (filePath.charAt(0) !== "/") {
                                 relativePath = filePath
                             } else {
                                 let cwd = process.cwd()
                                 relativePath = filePath.substring(cwd.length + 1)
                             }
 
-                            let line = expression.loc.start.line
-                            let column = expression.loc.start.column
-                            description.push(`${relativePath}:${line}:${column}:${this.file.code.substring(expression.start, expression.end)}`)
+                            const line = expression.loc.start.line
+                            const column = expression.loc.start.column
+                            const commit = commitHash ? `:commit ${commitHash}` : "";
+
+                            description.push(`${relativePath}:${line}:${column}:${this.file.code.substring(expression.start, expression.end)}${commit}`)
                         } else {
                             description.push(this.file.code.substring(expression.start, expression.end))
                         }
 
                     }
-                    path.node.arguments.unshift(t.stringLiteral(description.join(',')))
+                    path.node.arguments.unshift(t.stringLiteral(description.join(",")))
                 }
             }
         }

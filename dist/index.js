@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -10,7 +10,7 @@ exports.default = function (_ref) {
     return {
         visitor: {
             CallExpression: function CallExpression(path, options) {
-                var loggers = options.opts.loggers || [{ pattern: 'console' }];
+                var loggers = options.opts.loggers || [{ pattern: "console" }];
                 if (isLogger(path, loggers)) {
                     var description = [];
                     var _iteratorNormalCompletion = true;
@@ -24,7 +24,7 @@ exports.default = function (_ref) {
                             if (description.length === 0) {
                                 var relativePath = void 0;
                                 var filePath = this.file.log.filename;
-                                if (filePath.charAt(0) !== '/') {
+                                if (filePath.charAt(0) !== "/") {
                                     relativePath = filePath;
                                 } else {
                                     var cwd = process.cwd();
@@ -33,7 +33,9 @@ exports.default = function (_ref) {
 
                                 var line = expression.loc.start.line;
                                 var column = expression.loc.start.column;
-                                description.push(relativePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));
+                                var commit = commitHash ? ":commit " + commitHash : "";
+
+                                description.push(relativePath + ":" + line + ":" + column + ":" + this.file.code.substring(expression.start, expression.end) + commit);
                             } else {
                                 description.push(this.file.code.substring(expression.start, expression.end));
                             }
@@ -53,15 +55,25 @@ exports.default = function (_ref) {
                         }
                     }
 
-                    path.node.arguments.unshift(t.stringLiteral(description.join(',')));
+                    path.node.arguments.unshift(t.stringLiteral(description.join(",")));
                 }
             }
         }
     };
 };
 
-var _ = require('lodash');
+var _ = require("lodash");
+var exec = require("child_process").exec;
+var commitHash = "";
 
+exec("git rev-parse --short HEAD", function processExecution(error, result) {
+    if (error) {
+        console.info(error);
+        process.exit(0);
+    }
+
+    commitHash = process.env.NODE_ENV === "test" ? "000" : result;
+});
 
 function isLogger(path, loggers) {
     return _.some(loggers, function (logger) {
