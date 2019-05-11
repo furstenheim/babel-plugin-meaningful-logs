@@ -1,70 +1,66 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+exports.default = _default;
 
-exports.default = function (_ref) {
-    var t = _ref.types;
+const _ = require('lodash');
 
-    return {
-        visitor: {
-            CallExpression: function CallExpression(path, options) {
-                var loggers = options.opts.loggers || [{ pattern: 'console' }];
-                if (isLogger(path, loggers)) {
-                    var description = [];
-                    var _iteratorNormalCompletion = true;
-                    var _didIteratorError = false;
-                    var _iteratorError = undefined;
+const path = require('path');
 
-                    try {
-                        for (var _iterator = path.node.arguments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                            var expression = _step.value;
+function _default(_ref) {
+  let t = _ref.types;
+  return {
+    visitor: {
+      CallExpression(path, options) {
+        const loggers = options.opts.loggers || [{
+          pattern: 'console'
+        }];
+        const maxDepth = parseInt(options.opts.maxDepth) ? parseInt(options.opts.maxDepth) : null;
 
-                            if (description.length === 0) {
-                                var relativePath = void 0;
-                                var filePath = this.file.log.filename;
-                                if (filePath.charAt(0) !== '/') {
-                                    relativePath = filePath;
-                                } else {
-                                    var cwd = process.cwd();
-                                    relativePath = filePath.substring(cwd.length + 1);
-                                }
+        if (isLogger(path, loggers)) {
+          var description = [];
 
-                                var line = expression.loc.start.line;
-                                var column = expression.loc.start.column;
-                                description.push(relativePath + ':' + line + ':' + column + ':' + this.file.code.substring(expression.start, expression.end));
-                            } else {
-                                description.push(this.file.code.substring(expression.start, expression.end));
-                            }
-                        }
-                    } catch (err) {
-                        _didIteratorError = true;
-                        _iteratorError = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion && _iterator.return) {
-                                _iterator.return();
-                            }
-                        } finally {
-                            if (_didIteratorError) {
-                                throw _iteratorError;
-                            }
-                        }
-                    }
+          for (let expression of path.node.arguments) {
+            if (description.length === 0) {
+              let relativePath;
+              let filePath = this.file.opts.filename;
 
-                    path.node.arguments.unshift(t.stringLiteral(description.join(',')));
-                }
+              if (filePath.charAt(0) !== '/') {
+                relativePath = filePath;
+              } else {
+                let cwd = process.cwd();
+                relativePath = filePath.substring(cwd.length + 1);
+              }
+
+              let line = expression.loc.start.line;
+              let column = expression.loc.start.column;
+              description.push("".concat(parseRelativePath(relativePath, maxDepth), ":").concat(line, ":").concat(column, ":").concat(this.file.code.substring(expression.start, expression.end)));
+            } else {
+              description.push(this.file.code.substring(expression.start, expression.end));
             }
+          }
+
+          path.node.arguments.unshift(t.stringLiteral(description.join(',')));
         }
-    };
-};
+      }
 
-var _ = require('lodash');
-
+    }
+  };
+}
 
 function isLogger(path, loggers) {
-    return _.some(loggers, function (logger) {
-        return path.get("callee").matchesPattern(logger.pattern, true);
-    });
+  return _.some(loggers, function (logger) {
+    return path.get('callee').matchesPattern(logger.pattern, true);
+  });
+}
+
+function parseRelativePath(myPath, maxDepth) {
+  if (maxDepth == null) {
+    return myPath;
+  }
+
+  const splitPath = myPath.split(path.sep);
+  return splitPath.slice(Math.max(splitPath.length - maxDepth, 0)).join(path.sep);
 }

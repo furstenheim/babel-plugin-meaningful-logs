@@ -1,0 +1,11 @@
+{
+  "extends": "standard",
+  "plugins": [
+    "mocha"
+  ],
+  "globals": {
+    "describe": true,
+    "it": true,
+    "beforeEach": true
+  }
+}
