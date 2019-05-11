@@ -1,9 +1,11 @@
-var _ = require('lodash')
+const _ = require('lodash')
+const path = require('path')
 export default function ({ types: t }) {
   return {
     visitor: {
       CallExpression (path, options) {
-        var loggers = options.opts.loggers || [ { pattern: 'console' } ]
+        const loggers = options.opts.loggers || [ { pattern: 'console' } ]
+        const maxDepth = parseInt(options.opts.maxDepth) ? parseInt(options.opts.maxDepth) : null
         if (isLogger(path, loggers)) {
           var description = []
           for (let expression of path.node.arguments) {
@@ -19,7 +21,7 @@ export default function ({ types: t }) {
 
               let line = expression.loc.start.line
               let column = expression.loc.start.column
-              description.push(`${relativePath}:${line}:${column}:${this.file.code.substring(expression.start, expression.end)}`)
+              description.push(`${parseRelativePath(relativePath, maxDepth)}:${line}:${column}:${this.file.code.substring(expression.start, expression.end)}`)
             } else {
               description.push(this.file.code.substring(expression.start, expression.end))
             }
@@ -35,4 +37,12 @@ function isLogger (path, loggers) {
   return _.some(loggers, function (logger) {
     return path.get('callee').matchesPattern(logger.pattern, true)
   })
+}
+
+function parseRelativePath (myPath, maxDepth) {
+  if (maxDepth == null) {
+    return myPath
+  }
+  const splitPath = myPath.split(path.sep)
+  return splitPath.slice(Math.max(splitPath.length - maxDepth, 0)).join(path.sep)
 }
