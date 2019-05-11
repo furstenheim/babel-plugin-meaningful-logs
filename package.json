@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-meaningful-logs",
-  "version": "1.0.2",
+  "version": "2.0.1",
   "description": "Give meaning to your logs",
   "main": "dist/index.js",
   "repository": {
@@ -21,11 +21,11 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.4",
+    "@babel/cli": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
     "mocha": "2.2.5"
   },
   "dependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
     "lodash": ">=4.13.1"
   }
 }
