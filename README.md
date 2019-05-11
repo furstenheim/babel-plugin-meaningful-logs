@@ -28,3 +28,8 @@ By default it modifies all console commands: console.error, console.log... But i
 }
 ```
 
+
+### Running the tests
+
+    yarn build
+    yarn test

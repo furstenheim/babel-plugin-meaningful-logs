@@ -9,7 +9,7 @@ export default function ({ types: t }) {
           for (let expression of path.node.arguments) {
             if (description.length === 0) {
               let relativePath
-              let filePath = this.file.log.filename
+              let filePath = this.file.opts.filename
               if (filePath.charAt(0) !== '/') {
                 relativePath = filePath
               } else {
@@ -29,7 +29,6 @@ export default function ({ types: t }) {
       }
     }
   }
-
 }
 
 function isLogger (path, loggers) {
